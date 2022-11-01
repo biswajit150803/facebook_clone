@@ -12,87 +12,87 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import { AiOutlineCamera, AiOutlineGif } from "react-icons/ai";
 import { BiWorld } from "react-icons/bi";
 import Image from "next/image";
-// import Moment from "react-moment";
-// import {
-//   addDoc,
-//   collection,
-//   deleteDoc,
-//   doc,
-//   onSnapshot,
-//   orderBy,
-//   query,
-//   serverTimestamp,
-//   setDoc,
-// } from "firebase/firestore";
-// import { db } from "../firebase";
-// import { useSession, signIn, signOut } from "next-auth/react";
+import Moment from "react-moment";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { useSession, signIn, signOut } from "next-auth/react";
 import bluelike from "../assets/25like.png";
 import blacklike from "../assets/2unlike.png";
 import nouser from "../assets/nouser.png";
 
-// const Post = ({ id, username, userImg, caption, timestamp, img }) => {
-//   const [hasLiked, setHasLiked] = useState(false);
-//   const { data: session } = useSession();
-//   const [likes, setLikes] = useState([]);
-//   const [comments, setComments] = useState([]);
-//   const [comment, setComment] = useState("");
+const Post = ({ id, username, userImg, caption, timestamp, img }) => {
+  const [hasLiked, setHasLiked] = useState(false);
+  const { data: session } = useSession();
+  const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
 
   //When Likes update in the db update the likes in the app as well
-  // useEffect(
-  //   () =>
-  //     onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
-  //       setLikes(snapshot.docs)
-  //     ),
-  //   [db, id]
-  // );
+  useEffect(
+    () =>
+      onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
+        setLikes(snapshot.docs)
+      ),
+    [db, id]
+  );
 
   //Checking if user liked already
-  // useEffect(
-  //   () =>
-  //     setHasLiked(
-  //       likes.findIndex((like) => like.id === session?.user?.uid) !== -1
-  //     ),
-  //   [likes]
-  // );
+  useEffect(
+    () =>
+      setHasLiked(
+        likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+      ),
+    [likes]
+  );
 
   //When clicked once add like to fb
   //When double clicked delete like from db
-  // const likePost = async () => {
-  //   if (hasLiked) {
-  //     await deleteDoc(doc(db, "posts", id, "likes", session?.user?.uid));
-  //   } else {
-  //     await setDoc(doc(db, "posts", id, "likes", session?.user?.uid), {
-  //       username: session?.user?.name,
-  //     });
-  //   }
-  // };
+  const likePost = async () => {
+    if (hasLiked) {
+      await deleteDoc(doc(db, "posts", id, "likes", session?.user?.uid));
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", session?.user?.uid), {
+        username: session?.user?.name,
+      });
+    }
+  };
 
   //When Comments update in db update them in the app as well
-  // useEffect(
-  //   () =>
-  //     onSnapshot(
-  //       query(
-  //         collection(db, "posts", id, "comments"),
-  //         orderBy("timestamp", "desc")
-  //       ),
-  //       (snapshot) => setComments(snapshot.docs)
-  //     ),
-  //   [db, id]
-  // );
+  useEffect(
+    () =>
+      onSnapshot(
+        query(
+          collection(db, "posts", id, "comments"),
+          orderBy("timestamp", "desc")
+        ),
+        (snapshot) => setComments(snapshot.docs)
+      ),
+    [db, id]
+  );
 
   //Send the comments to db
-  // const sendComment = async (e) => {
-  //   e.preventDefault();
-  //   const commentToSend = comment;
-  //   setComment("");
-  //   await addDoc(collection(db, "posts", id, "comments"), {
-  //     comment: commentToSend,
-  //     username: session?.user?.name,
-  //     image: session?.user?.image,
-  //     timestamp: serverTimestamp(),
-  //   });
-  // };
-  const Post=()=>{
+  const sendComment = async (e) => {
+    e.preventDefault();
+    const commentToSend = comment;
+    setComment("");
+    await addDoc(collection(db, "posts", id, "comments"), {
+      comment: commentToSend,
+      username: session?.user?.name,
+      image: session?.user?.image,
+      timestamp: serverTimestamp(),
+    });
+  };
+
   return (
     <div className="bg-white rounded-[1rem] px-5 py-4 mt-4">
       {/* Header */}
@@ -105,7 +105,7 @@ import nouser from "../assets/nouser.png";
             <p className="font-bold ">{username}</p>
             <div className="flex">
               <p className="text-xs">
-                {/* <Moment fromNow>{timestamp?.toDate()}</Moment> &#8226;{" "} */}
+                <Moment fromNow>{timestamp?.toDate()}</Moment> &#8226;{" "}
               </p>
               <BiWorld className="ml-1 shrink-0" />
             </div>
@@ -226,6 +226,6 @@ import nouser from "../assets/nouser.png";
       </div>
     </div>
   );
-          };
+};
 
 export default Post;

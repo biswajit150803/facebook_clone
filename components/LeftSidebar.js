@@ -6,10 +6,10 @@ import { BsCart3, BsPeopleFill, BsCalendar2Fill } from "react-icons/bs";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { AiOutlineDesktop, AiFillClockCircle } from "react-icons/ai";
 import Image from "next/image";
-// import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import nouser from "../assets/nouser.png";
 const LeftSidebar = () => {
-//   const { data: session } = useSession();
+  const { data: session } = useSession();
   return (
     <div className="w-[10rem] hidden sm:block">
       <div className="flex flex-col  pt-4 sm:pt-12 pl-7">
@@ -20,13 +20,13 @@ const LeftSidebar = () => {
 
         <div className="flex items-center mt-4">
           <div className="w-9 h-9 shrink-0">
-            {/* <img
+            <img
               src={session ? session?.user?.image : nouser.src}
               className="rounded-full"
-            /> */}
+            />
           </div>
           <p className="ml-2 font-bold whitespace-nowrap">
-            {/* {session ? session?.user?.name : "Log in"} */}
+            {session ? session?.user?.name : "Log in"}
           </p>
         </div>
 

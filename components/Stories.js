@@ -12,16 +12,15 @@ import kobe from "../assets/1kobe.webp";
 import arnoldbackground from "../assets/arnoldbackground.webp";
 import arnold from "../assets/1arnold.jpg";
 import Image from "next/image";
-// import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 const Stories = () => {
   const stories = [
-    {profile:therock,background:therock20,uid:"1"},
-    { profile: mikeprofile, background: mike, uid: "2" },
-    { profile: mrbeast, background: mrbeastbackground, uid: "3" },
-    { profile: kobe, background: kobebackground, uid: "4" },
-    { profile: arnold, background: arnoldbackground, uid: "5" },
+    { profile: mikeprofile, background: mike, uid: "1" },
+    { profile: mrbeast, background: mrbeastbackground, uid: "2" },
+    { profile: kobe, background: kobebackground, uid: "3" },
+    { profile: arnold, background: arnoldbackground, uid: "4" },
   ];
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
   return (
     <div className="flex items-center w-screen h-36  sm:w-full px-2 mt-4 sm:mt-8">
       <div className="w-full   flex justify-between space-x-1 sm:space-x-4 p-1 mx-auto max-w-[25rem] sm:max-w-[33rem] px-2 bg-white rounded-[1rem] py-3 ">
@@ -31,15 +30,15 @@ const Stories = () => {
           className="relative flex  w-[4.4rem] h-32  sm:w-24 sm:h-40 rounded-[1rem] "
         >
           <div className="flex">
-            {/* <img
+            <img
               src={session ? session?.user?.image : therock20.src}
               className="flex object-cover rounded-[1rem]"
-            /> */}
+            />
             <div className="flex absolute top-1 left-1 w-9 h-9 p-1 bg-blue-500 rounded-full">
-              {/* <img
+              <img
                 src={session ? session?.user?.image : therock.src}
                 className="rounded-full object-cover"
-              /> */}
+              />
             </div>
           </div>
         </div>
